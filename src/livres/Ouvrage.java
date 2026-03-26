@@ -10,37 +10,25 @@ import java.util.Objects;
  * @since H25
  */
 
-public class Ouvrage {
-
-    public enum Format {
-        PAPIER, AUDIO, VIDEO
-    }
+public abstract class Ouvrage {
 
     public static final String TITRE_INCONNU = "Titre Inconnu";
     public static final int NOMBRE_EXEMPLAIRE_DEFAUT = 0;
-    public static final Format TYPE_DEFAULT = Format.PAPIER;
     public static final int LONGUEUR_TITRE_MIN = 3;
 
-    private String titre = TITRE_INCONNU;
-    private Auteur auteur = new Auteur();
-    private LocalDate date;
-    private int nombreExemplaires = NOMBRE_EXEMPLAIRE_DEFAUT;
-    private Format type = TYPE_DEFAULT;
+    protected String titre = TITRE_INCONNU;
+    protected Auteur auteur = new Auteur();
+    protected LocalDate date;
+    protected int nombreExemplaires = NOMBRE_EXEMPLAIRE_DEFAUT;
 
-    public Ouvrage(String titre, Auteur auteur, Format type,
-                   LocalDate date, int nombreExemplaires) {
+    public Ouvrage(String titre, Auteur auteur, LocalDate date, int nombreExemplaires) {
         setTitre(titre);
         setAuteur(auteur);
-        this.type = type;
         setDate(date);
         setNombreExemplaires(nombreExemplaires);
     }
-    public Ouvrage(String titre, Auteur auteur,Format type) {
-        this(titre, auteur, type, null, NOMBRE_EXEMPLAIRE_DEFAUT);
-    }
-
     public Ouvrage(String titre, Auteur auteur) {
-        this(titre, auteur, TYPE_DEFAULT, null, NOMBRE_EXEMPLAIRE_DEFAUT);
+        this(titre, auteur, null, NOMBRE_EXEMPLAIRE_DEFAUT);
     }
 
     public String getTitre() {
@@ -87,10 +75,6 @@ public class Ouvrage {
         }
     }
 
-    public Format getType() {
-        return type;
-    }
-
     public String identificateur() {
         String id = titre.substring(0, 2) + "_" +
                 auteur.getNom().substring(0, 1) +
@@ -105,7 +89,7 @@ public class Ouvrage {
         String affichageDAte = date != null ? date.toString() : "Non Disponible";
 
         return "[" + identificateur() + "] " + titre + " (" + auteur.getPrenom() + " "
-                + auteur.getNom() + ") - " + type + " - disponible le " + affichageDAte + " (" + nombreExemplaires + " ex.)";
+                + auteur.getNom() + ")" + " - disponible le " + affichageDAte + " (" + nombreExemplaires + " ex.)";
     }
 
     public void acheter(int nombre) {
@@ -132,13 +116,12 @@ public class Ouvrage {
         if (!(o instanceof Ouvrage)) return false;
         Ouvrage ouvrage = (Ouvrage) o;
         return Objects.equals(titre, ouvrage.titre) &&
-                Objects.equals(auteur, ouvrage.auteur) &&
-                type == ouvrage.type;
+                Objects.equals(auteur, ouvrage.auteur);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(titre, auteur, type);
+        return Objects.hash(titre, auteur);
     }
 
     private static boolean nombreExemplairesValides(int nombreExemplaires) {
