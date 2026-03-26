@@ -29,7 +29,8 @@ public class Pays {
         if (IsValidPays(codePays)) {
             this.codePays = codePays;
         } else {
-            this.codePays = "AAA";
+            System.out.println("Code de pays invalide.");
+            this.codePays = "ERR";
         }
     }
 
@@ -39,6 +40,6 @@ public class Pays {
 
     @Override
     public String toString() {
-        return nom;
+        return codePays + ":" + nom;
     }
 }

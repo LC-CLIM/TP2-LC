@@ -1,6 +1,7 @@
 package livres;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Serie {
@@ -33,5 +34,15 @@ public class Serie {
 
     public Serie(String nom){
         this.nom = nom;
+    }
+
+    @Override
+    public String toString() {
+        String serieString = "";
+        Iterator<Ouvrage> iteratorSerie = listeOuvrages.iterator();
+        while (iteratorSerie.hasNext()){
+            serieString = serieString + iteratorSerie.next().toString() + "\n";
+        }
+        return "Série: " + nom + " , Ouvrages :\n" + serieString;
     }
 }

@@ -23,6 +23,39 @@ public class TestOuvrage {
         TestOuvrage test = new TestOuvrage();
         test.testOuvrages();
         test.testTrouver();
+        test.testSerie();
+        test.testPays();
+    }
+
+    private void testPays() {
+        System.out.println("------Test pays------");
+        System.out.println("Tests d'erreur");
+        Pays paysErreur1 = new Pays("non", "URSS");
+        System.out.println(paysErreur1);
+        Pays paysErreur2 = new Pays("FAUX", "Rome");
+        System.out.println(paysErreur2);
+        Pays paysTestMexique = new Pays("MEX", "Mexique");
+        System.out.println("Tests de création et utilisation de pays:\n" + paysTestMexique);
+        Auteur auteurTestPays = new Auteur("Prenom", "Nom", paysTestMexique);
+        System.out.println(auteurTestPays);
+    }
+
+    public void testSerie() {
+        System.out.println("------Test série------");
+        Auteur frank = new Auteur("Frank", "Herbert", etatsunis);
+        Auteur albertine = new Auteur("Albertine", "Tremblay", canada);
+        Auteur john = new Auteur("John", "Smith", etatsunis);
+        Ouvrage livreA = new Ouvrage("Titre assez long", john);
+        Ouvrage livre2 = new Ouvrage("Tout va bien", albertine, Ouvrage.Format.AUDIO, LocalDate.now(), 10);
+        Ouvrage dune = new Ouvrage("Dune", frank, Ouvrage.Format.PAPIER, LocalDate.ofYearDay(1965, 274), 1000);
+        Serie serieTest = new Serie("TEST");
+        System.out.println("Série vide: " + serieTest);
+        serieTest.ajouterOuvrage(dune);
+        serieTest.ajouterOuvrage(livreA);
+        serieTest.ajouterOuvrage(livre2);
+        System.out.println("Série après trois ajouts: " + serieTest);
+        serieTest.enleverOuvrage(livreA);
+        System.out.println("Série après une rétraction: " + serieTest);
     }
 
 
